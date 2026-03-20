@@ -81,7 +81,29 @@ app.post('/api/matches', async (req, res) => {
     }
 });
 
+// --- MISSING ROUTES ---
 
+// 5. Update Match (Join/Confirm)
+app.put('/api/matches/:id', async (req, res) => {
+    try {
+        const updatedMatch = await Match.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedMatch) return res.status(404).json({ error: 'Match not found' });
+        res.json({ ...updatedMatch._doc, id: updatedMatch._id.toString() });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update match' });
+    }
+});
+
+// 6. Fetch All Users
+app.get('/api/users', async (req, res) => {
+    try {
+        const users = await User.find();
+        const formattedUsers = users.map(u => ({ ...u._doc, id: u._id.toString() }));
+        res.json(formattedUsers);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch users' });
+    }
+});
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
