@@ -2,14 +2,14 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true }, // 'mail' in your friend's list
+    password: { type: String, required: true },
+    gender: { type: String },
     phone: { type: String },
-    sports: [{ type: String }], // Added this!
-    sportLevels: { type: Map, of: String }, // Added this!
-    level: { type: String, default: 'Beginner' },
-    reliabilityScore: { type: Number, default: 100 },
-    matchesPlayed: { type: Number, default: 0 }, // Added this!
-    profileComplete: { type: Boolean, default: false } // Changed to false so the setup screen works properly
+    city: { type: String },
+    isVenueManager: { type: Boolean, default: false },
+    matchesPlayed: { type: Number, default: 0 },
+    ranking: { type: String, default: 'Unranked' },
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);
